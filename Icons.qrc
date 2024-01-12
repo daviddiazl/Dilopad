@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>IconDilopad.png</file>
+    </qresource>
+</RCC>
