@@ -6,19 +6,20 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    QFont font;
-    font.setPointSize(16);
+    modes = new mmodes();
+    proyectos = new mMenu();
     ui->setupUi(this);
-    setCentralWidget(ui->texto);
-    this->setStyleSheet("QMainWindow { background-color : white; color : yellow; }");
+    this->setStyleSheet("QMainWindow { background-color : gray; color : yellow; }");
     ui->menubar->setStyleSheet("QMenuBar { background-color : white ; color : blue;}");
-    ui->texto->setStyleSheet("QPlainTextEdit { background-color : blue; color : white; }");
-    ui->texto->setFont(font);
+    this->ui->lProyects->addWidget(proyectos);
+    this->ui->lEditor->addWidget(modes);
     this->myPath = "";
 }
 
 MainWindow::~MainWindow()
 {
+    delete proyectos;
+    delete modes;
     delete ui;
 }
 
@@ -36,9 +37,10 @@ void MainWindow::on_actionAbrir_triggered()
     }else
     {
         io.setDevice(&arch);
-        ui->texto->clear();
-        ui->texto->appendPlainText(io.readAll());
+        modes->getEditorTexto()->clearEditor();
+        modes->getEditorTexto()->introText(io.readAll());
         arch.close();
+        QMessageBox::information(this,"Abierto",fileName);
         this->myPath = fileName;
     }
 
@@ -64,7 +66,7 @@ void MainWindow::on_actionGuardar_triggered()
     {
         //QString texto = ui->texto->toPlainText();
         io.setDevice(&arch);
-        io << ui->texto->toPlainText();
+        io << modes->getEditorTexto()->getText();
         arch.flush();
         arch.close();
     }
@@ -90,7 +92,7 @@ void MainWindow::on_actionGuardar_como_triggered()
     {
         //QString texto = ui->texto->toPlainText();
         io.setDevice(&arch);
-        io << ui->texto->toPlainText();
+        io << modes->getEditorTexto()->getText();
         arch.flush();
         arch.close();
         //txt += filePath.fileName();
@@ -114,25 +116,25 @@ void MainWindow::on_actionCerrar_triggered()
 
 void MainWindow::on_actionCopiar_triggered()
 {
-    ui->texto->copy();
+    modes->getEditorTexto()->copyEditor();
 }
 
 
 void MainWindow::on_actionPegar_triggered()
 {
-    ui->texto->paste();
+    modes->getEditorTexto()->pasteEditor();
 }
 
 
 void MainWindow::on_actionCortar_triggered()
 {
-    ui->texto->cut();
+    modes->getEditorTexto()->cutEditor();
 }
 
 
 void MainWindow::on_actionBorrar_triggered()
 {
-    ui->texto->clear();
+    modes->getEditorTexto()->clearEditor();
 }
 
 
@@ -148,5 +150,13 @@ void MainWindow::on_actionAcerca_de_triggered()
     txt += "Fecha: 04/01/2024\n";
     txt += "(C) Dilopad (R)";
     QMessageBox::about(this,"Dilopad",txt);
+}
+
+
+void MainWindow::on_actionProyectos_triggered()
+{
+    this->proyectos->startMenu(this->myPath);
+   // this->ui->horizontalLayout_2->addWidget(proyectos,0);
+
 }
 

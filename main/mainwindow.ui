@@ -14,17 +14,20 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset resource="Icons.qrc">
+   <iconset resource="../Icons.qrc">
     <normaloff>:/IconDilopad.png</normaloff>:/IconDilopad.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
-     <widget class="QPlainTextEdit" name="texto">
-      <property name="backgroundVisible">
-       <bool>false</bool>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,5">
+      <item>
+       <layout class="QVBoxLayout" name="lProyects"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="lEditor"/>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -72,8 +75,15 @@
     <addaction name="separator"/>
     <addaction name="actionAcerca_de"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionProyectos"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuEdici_n"/>
+   <addaction name="menuView"/>
    <addaction name="menuAcerca_de"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -148,9 +158,14 @@
     <string>Ctrl+H</string>
    </property>
   </action>
+  <action name="actionProyectos">
+   <property name="text">
+    <string>Proyectos</string>
+   </property>
+  </action>
  </widget>
  <resources>
-  <include location="Icons.qrc"/>
+  <include location="../Icons.qrc"/>
  </resources>
  <connections/>
 </ui>
